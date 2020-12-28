@@ -1,0 +1,11 @@
+def dev(x):
+    m=4*pow(x,3)+6*x
+    return m
+
+
+x=2
+for i in range(100):
+    m=dev(x)
+    x=x-0.01*m
+print(x)
+0.00200576428456204

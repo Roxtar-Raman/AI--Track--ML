@@ -1,0 +1,64 @@
+import pandas as pd
+import numpy as  np
+In [2]:
+data=pd.read_excel("a-5.xls")
+*** No CODEPAGE record, no encoding_override: will use 'ascii'
+In [3]:
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+data = scaler.fit_transform(data)
+x=data[:,0]
+y=data[:,1]
+In [4]:
+from sklearn.model_selection import train_test_split
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.1,random_state=5)
+In [5]:
+def dev(m,c,x,y):
+    m_dev=0
+    c_dev=0
+    for j in range(len(x)):
+        m_dev=m_dev-(1*(y[j]-m*x[j]-c)*x[j])
+        c_dev=c_dev-(1*(y[j]-m*x[j]-c))
+    m_dev=m_dev/len(x)
+    c_dev=c_dev/len(x)
+    
+    return m_dev,c_dev
+In [6]:
+me=[]
+ae=[]
+In [7]:
+m=1
+c=-1
+
+for i in range(1000):
+    for j in range(len(xtrain)):
+        if i==999:
+            me.append(((ytrain[j]-m*xtrain[j]-c)**2)/2)
+            ae.append((ytrain[j]-m*xtrain[j]-c))
+        del_m,del_c=dev(m,c,xtrain,ytrain)
+        m=m-0.01*del_m
+        c=c-0.01*del_c
+print(m,c)
+-0.23356553135569072 0.0005891724923279275
+In [8]:
+import math
+print("mse of train data "+str(sum(me)/len(xtrain)))
+print("rse of train data "+str(math.sqrt(sum(me)/len(xtrain))))
+print("ase of train data "+str(sum(ae)/len(xtrain)))
+mse of train data 0.5205640306312097
+rse of train data 0.7215012339776071
+ase of train data 8.22387425648264e-18
+In [9]:
+me=[]
+ae=[]
+for j in range(len(xtest)):
+        me.append(((ytest[j]-m*xtest[j]-c)**2)/2)
+        ae.append((ytest[j]-m*xtest[j]-c))
+In [10]:
+import math
+print("mse of train data "+str(sum(me)/len(xtest)))
+print("rse of train data "+str(math.sqrt(sum(me)/len(xtest))))
+print("ase of train data "+str(sum(ae)/len(xtest)))
+mse of train data 0.04392802510087546
+rse of train data 0.20959013598181442
+ase of train data -0.005891724923259604

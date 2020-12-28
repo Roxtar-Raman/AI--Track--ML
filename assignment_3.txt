@@ -1,0 +1,58 @@
+import math
+def dev(x,y):
+    
+    return 6*x,5*math.exp(-y)
+
+x=4
+y=3
+for i in range(1000):
+    del_x,del_y=dev(x,y)
+    x=x-0.001*del_x
+    print("x value "+str(i)+"iteration"+str(x))
+    y=y-0.001*del_y
+    print("y value "+str(i)+"iteration"+str(y))
+    
+print("final value of x ="+str(x))
+print("final value of y="+str(y))
+x value 0iteration3.976
+y value 0iteration2.999751064658161
+x value 1iteration3.952144
+y value 1iteration2.999502067339803
+x value 2iteration3.928431136
+y value 2iteration2.999253008014062
+x value 3iteration3.904860549184
+y value 3iteration2.9990038866500472
+x value 4iteration3.881431385888896
+y value 4iteration2.998754703216848
+x value 5iteration3.8581427975735627
+y value 5iteration2.9985054576835277
+x value 6iteration3.8349939407881215
+y value 6iteration2.998256150019129
+x value 7iteration3.811983977143393
+y value 7iteration2.9980067801926706
+x value 8iteration3.7891120732805326
+y value 8iteration2.9977573481731477
+x value 9iteration3.7663774008408493
+y value 9iteration2.9975078539295326
+x value 10iteration3.743779136435804
+y value 10iteration2.9972582974307738
+x value 11iteration3.721316461617189
+y value 11iteration2.9970086786457975
+x value 12iteration3.698988562847486
+y value 12iteration2.996758997543506
+x value 13iteration3.676794631470401
+y value 13iteration2.996509254092778
+x value 14iteration3.6547338636815785
+y value 14iteration2.99625944826247
+x value 15iteration3.632805460499489
+y value 15iteration2.996009580021414
+x value 16iteration3.611008627736492
+y value 16iteration2.995759649338419
+x value 17iteration3.5893425759700732
+y value 17iteration2.9955096561822714
+x value 18iteration3.5678065205142526
+y value 18iteration2.995259600521733
+x value 19iteration3.546399681391167
+y value 19iteration2.995009482325543
+x value 20iteration3.5251212833028203
+y value 20iteration2.994759301562417

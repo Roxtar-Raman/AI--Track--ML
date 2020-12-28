@@ -1,0 +1,53 @@
+import pandas as pd
+import numpy as  np
+In [17]:
+data=pd.read_excel("slr09.xls")
+In [28]:
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+data = scaler.fit_transform(data)
+x=data[:,0]
+y=data[:,1]
+In [38]:
+from sklearn.model_selection import train_test_split
+xtrain, xtest, ytrain, ytest = train_test_split(x, y, test_size=0.1,random_state=5)
+In [39]:
+def dev(m,c,x,y):
+    return -1*(y-m*x-c)*x,-1*(y-m*x-c)
+In [41]:
+print(xtrain)
+[-0.12500664  0.27977677 -0.12500664  0.48216848 -0.93457348  0.8869519
+ -1.94653203  1.08934361 -0.73218177  1.69651874 -0.73218177 -1.13696519
+ -1.3393569   0.27977677  0.48216848  0.07738507  0.8869519  -1.13696519
+  0.68456019 -0.73218177 -0.73218177  1.49412703 -1.13696519 -0.52979006
+  0.68456019 -0.52979006 -1.13696519 -0.32739835  1.69651874 -0.73218177]
+In [48]:
+me=[]
+ae=[]
+In [49]:
+m=1
+c=-1
+
+for i in range(1000):
+    for j in range(len(xtrain)):
+        if i==999:
+            me.append((ytrain[j]-m*xtrain[j]-c)**2)
+            ae.append((ytrain[j]-m*xtrain[j]-c))
+        del_m,del_c=dev(m,c,x[j],y[j])
+        m=m-0.01*del_m
+        c=c-0.01*del_c
+print(m,c)
+-0.4635286565354157 0.03050986567912844
+In [57]:
+import math
+print("mse of train data "+str(sum(me)/len(xtrain)))
+print("mse of train data "+str(math.sqrt(sum(me)/len(xtrain))))
+print("mse of train data "+str(sum(ae)/len(xtrain)))
+mse of train data 0.9073206736918003
+mse of train data 0.9525338176105876
+mse of train data -0.1916975885473221
+In [51]:
+for j in range(len(xtest)):
+        me.append((ytrain[j]-m*xtrain[j]-c)**2)
+            ae.append((ytrain[j]-m*xtrain[j]-c))
+[0.17001881928161047, 0.10127994401475508, 0.16819707895787003, 0.397285265635578, -0.6520400570918589, 1.6663902119090679, -1.4078564156806, 1.027805787349151, 0.9441776515345643, -1.0318625955374783, -1.4180655731347327, -0.017136882717462373, 0.3398307053660864, -0.6717628760866374, -1.5185870051841814, -0.6031572952386987, -1.2622861460090593, 0.6148984847591021, -0.8917736355583985, 1.7337940764533848, -1.6526133295768468, -1.3949069114249464, 0.10864255216428167, -0.6581353322006078, 1.0569556448210373, 0.19716323475787859, -0.5925449072732794, 0.6448156683215935, -0.38545854271774405, -0.7639952763130919]
